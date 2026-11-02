@@ -1,1 +1,15 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Entornos virtuales
+venv/
+env/
+ENV/
+.env
+
+# Entornos de desarrollo / IDEs
+.vscode/
+.idea/
 
