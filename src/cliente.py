@@ -114,3 +114,31 @@ class Cliente:
     def __str__(self) -> str:
         """Representación en texto legible del objeto Cliente."""
         return f"Cliente[{self.identificacion}] - {self.nombre} | Correo: {self.correo} | Tel: {self.telefono}"
+
+
+# --- BLOQUE DE PRUEBAS UNITARIAS ---
+if __name__ == "__main__":
+    print("=== INICIANDO PRUEBAS DEL MÓDULO CLIENTE ===\n")
+
+    # 1. Prueba exitosa
+    try:
+        c1 = Cliente("1020304050", "Alejandra Hurtado", "alejandra@correo.com", "3001234567")
+        print("OK ->", c1)
+    except DatosInvalidosError as e:
+        print("Error inesperado:", e)
+
+    print("-" * 50)
+
+    # 2. Prueba de error controlado (correo inválido)
+    try:
+        c2 = Cliente("987654321", "Carlos Perez", "correo_sin_arroba.com", "3109876543")
+    except DatosInvalidosError as e:
+        print(f"EXCEPCIÓN CONTROLADA -> {e}")
+
+    print("-" * 50)
+
+    # 3. Prueba de encapsulación (intentar modificar con dato inválido)
+    try:
+        c1.telefono = "12"
+    except DatosInvalidosError as e:
+        print(f"VALIDACIÓN EN SETTER -> {e}")
