@@ -1,6 +1,6 @@
-Nombre del estudiante: Nicolas Suarez Sanchez 
-Grupo: 591
-Curso: Programación - 213023A_2204
+# Nombre del estudiante: Nicolas Suarez Sanchez 
+# Grupo: 591
+# Curso: Programación - 213023A_2204
     
 from abc import ABC, abstractmethod
 
