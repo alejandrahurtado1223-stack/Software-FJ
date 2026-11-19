@@ -1,9 +1,6 @@
 Nombre del estudiante: Nicolas Suarez Sanchez 
 Grupo: 591
 Curso: Programación - 213023A_2204
-Declaración de herramientas: Código estructurado con apoyo de asistente de IA 
-para plantillas de POO y depuración de excepciones, validado y adaptado por la autora.
-"""
     
 from abc import ABC, abstractmethod
 
