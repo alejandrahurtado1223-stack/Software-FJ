@@ -1,5 +1,5 @@
 """
-Nombre del estudiante: [Juan Sebastian Cortes Saenz]
+Nombre del estudiante: Juan Sebastian Cortes Saenz
 Grupo: 591
 Curso: Programación - 213023A_2204
 Módulo 1: Sistema de registro de eventos y errores (Logs) para Software FJ.
