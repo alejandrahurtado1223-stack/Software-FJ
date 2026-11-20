@@ -41,11 +41,11 @@ class Cliente(EntidadBase):
 
     @nombre.setter
     def nombre(self, valor: str):
-        if not valor or len(str(valor).strip()) < 3:
+        if not isinstance(valor, str) or len(valor.strip()) < 3:
             error_msg = f"Nombre inválido: '{valor}'. Debe tener al menos 3 caracteres."
             registrar_error(error_msg)
             raise DatosInvalidosError(error_msg)
-        self.__nombre = str(valor).strip()
+        self.__nombre = valor.strip()
 
     @property
     def correo(self) -> str:
@@ -54,11 +54,11 @@ class Cliente(EntidadBase):
     @correo.setter
     def correo(self, valor: str):
         patron = r"^[\w\.-]+@[\w\.-]+\.\w+$"
-        if not valor or not re.match(patron, str(valor).strip()):
+        if not isinstance(valor, str) or not re.match(patron, valor.strip()):
             error_msg = f"Formato de correo electrónico inválido: '{valor}'."
             registrar_error(error_msg)
             raise DatosInvalidosError(error_msg)
-        self.__correo = str(valor).strip().lower()
+        self.__correo = valor.strip().lower()
 
     @property
     def telefono(self) -> str:
@@ -66,6 +66,10 @@ class Cliente(EntidadBase):
 
     @telefono.setter
     def telefono(self, valor: str):
+        if valor is None:
+            error_msg = f"Número de teléfono inválido: '{valor}'. Debe tener entre 7 y 15 dígitos."
+            registrar_error(error_msg)
+            raise DatosInvalidosError(error_msg)
         valor_limpio = str(valor).strip()
         if not valor_limpio.isdigit() or not (7 <= len(valor_limpio) <= 15):
             error_msg = f"Número de teléfono inválido: '{valor}'. Debe tener entre 7 y 15 dígitos."
