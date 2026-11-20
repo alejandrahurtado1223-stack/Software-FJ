@@ -1,0 +1,16 @@
+2026-11-20 11:55:35 | INFO    | === INICIO DE EJECUCIÓN DEL SISTEMA SOFTWARE FJ ===
+2026-11-20 11:55:35 | INFO    | Cliente creado exitosamente: Alejandra Hurtado (ID: 1020304050)
+2026-11-20 11:55:35 | INFO    | Cliente creado exitosamente: Nicolas Suarez (ID: 1098765432)
+2026-11-20 11:55:35 | ERROR   | Formato de correo electrónico inválido: 'carlos_sin_arroba.com'.
+2026-11-20 11:55:35 | INFO    | Servicio creado: [Reserva Sala] SRV-001 - Sala de Juntas Ejecutiva | 4h | Capacidad: 12 p. | Catering: Sí
+2026-11-20 11:55:35 | INFO    | Servicio creado: [Alquiler Equipos] SRV-002 - Estaciones de Trabajo Portátiles | Cant: 3 | Días: 5 | Seguro: Sí
+2026-11-20 11:55:35 | INFO    | Servicio creado: [Asesoría] SRV-003 - Consultoría Arquitectura Cloud | Nivel: Senior | Horas: 3
+2026-11-20 11:55:35 | INFO    | === FIN DE LAS PRIMERAS 5 OPERACIONES SIMULADAS ===
+2026-11-20 12:04:40 | INFO    | === INICIO DE EJECUCIÓN DEL SISTEMA SOFTWARE FJ ===
+2026-11-20 12:04:40 | INFO    | Cliente creado exitosamente: Alejandra Hurtado (ID: 1020304050)
+2026-11-20 12:04:40 | INFO    | Cliente creado exitosamente: Nicolas Suarez (ID: 1098765432)
+2026-11-20 12:04:40 | ERROR   | Formato de correo electrónico inválido: 'carlos_sin_arroba.com'.
+2026-11-20 12:04:40 | INFO    | Servicio creado: [Reserva Sala] SRV-001 - Sala de Juntas Ejecutiva | 4h | Capacidad: 12 p. | Catering: Sí
+2026-11-20 12:04:40 | INFO    | Servicio creado: [Alquiler Equipos] SRV-002 - Estaciones de Trabajo Portátiles | Cant: 3 | Días: 5 | Seguro: Sí
+2026-11-20 12:04:40 | INFO    | Servicio creado: [Asesoría] SRV-003 - Consultoría Arquitectura Cloud | Nivel: Senior | Horas: 3
+2026-11-20 12:04:40 | INFO    | === FIN DE LAS PRIMERAS 5 OPERACIONES SIMULADAS ===
