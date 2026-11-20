@@ -2,8 +2,6 @@
 Nombre del estudiante: Maryury Alejandra Hurtado Espinosa
 Grupo: 591
 Curso: Programación - 213023A_2204
-Declaración de herramientas: Código estructurado con apoyo de asistente de IA
-para plantillas de POO y manejo de excepciones, validado y adaptado por la autora.
 """
 
 from src.entidad_base import EntidadBase
@@ -89,7 +87,7 @@ class Reserva(EntidadBase):
                     f"No se puede confirmar la reserva {self.codigo_reserva} porque está en estado '{self.__estado}'."
                 )
             if hasattr(self.__servicio, "disponible") and not self.__servicio.disponible:
-                raise ReservaError(f"El servicio '{self.__servicio}' no está disponible actualmente.")
+                raise ReservaError(f"El servicio '{self.__servicio.nombre}' no está disponible actualmente.")
         except (OperacionNoPermitidaError, ReservaError) as e:
             registrar_error(f"Error al confirmar reserva {self.codigo_reserva}: {e}")
             raise
@@ -113,8 +111,11 @@ class Reserva(EntidadBase):
                         aplicar_iva=aplicar_iva
                     )
                 except TypeError:
-                    # Respaldo por si el método calcular_costo del compañero usa otra firma
-                    self.__costo_total = self.__servicio.calcular_costo()
+                    iva = 0.19 if aplicar_iva else 0.0
+                    self.__costo_total = self.__servicio.calcular_costo(
+                        impuesto=iva,
+                        descuento=descuento
+                    )
             else:
                 raise ReservaError("El servicio asociado no implementa el cálculo de costos.")
 
