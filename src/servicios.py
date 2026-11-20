@@ -1,16 +1,18 @@
-# Nombre del estudiante: Nicolas Suarez Sanchez 
+# Nombre del estudiante: Nicolas Suarez Sanchez
 # Grupo: 591
 # Curso: Programación - 213023A_2204
-    
+
 from abc import ABC, abstractmethod
+from src.exceptions import CalculoInconsistenteError
 
 
 # Clase base para todos los servicios
 class Servicio(ABC):
-    def __init__(self, id_servicio: str, nombre: str, costo_base: float):
+    def __init__(self, id_servicio: str, nombre: str, costo_base: float, disponible: bool = True):
         self._id_servicio = id_servicio
         self._nombre = nombre
         self._costo_base = costo_base
+        self._disponible = bool(disponible)
         self.validar_parametros()
 
     @property
@@ -25,14 +27,30 @@ class Servicio(ABC):
     def costo_base(self) -> float:
         return self._costo_base
 
+    @property
+    def disponible(self) -> bool:
+        return self._disponible
+
+    @disponible.setter
+    def disponible(self, estado: bool) -> None:
+        self._disponible = bool(estado)
+
     @abstractmethod
     def validar_parametros(self) -> None:
         if not self._id_servicio or not isinstance(self._id_servicio, str):
             raise ValueError("El ID del servicio no puede estar vacío.")
         if not self._nombre or not isinstance(self._nombre, str):
             raise ValueError("El nombre del servicio no es válido.")
-        if self._costo_base <= 0:
+        if not isinstance(self._costo_base, (int, float)) or self._costo_base <= 0:
             raise ValueError("El costo base debe ser mayor a 0.")
+
+    def _validar_tasas(self, impuesto: float, descuento: float) -> float:
+        if impuesto < 0 or descuento < 0:
+            raise CalculoInconsistenteError("El impuesto y el descuento no pueden ser negativos.")
+        desc_norm = descuento / 100.0 if descuento > 1 else descuento
+        if desc_norm > 1.0:
+            raise CalculoInconsistenteError("El descuento no puede superar el 100%.")
+        return desc_norm
 
     @abstractmethod
     def calcular_costo(self, impuesto: float = 0.19, descuento: float = 0.0) -> float:
@@ -71,13 +89,14 @@ class ReservaSalas(Servicio):
             raise ValueError("La capacidad debe ser mayor a 0.")
 
     def calcular_costo(self, impuesto: float = 0.19, descuento: float = 0.0) -> float:
+        desc_norm = self._validar_tasas(impuesto, descuento)
         subtotal = self._costo_base * self._horas
-        
+
         # recargo por servicio de catering
         if self._incluye_catering:
             subtotal += 50000.0
 
-        desc_monto = subtotal * (descuento / 100.0 if descuento > 1 else descuento)
+        desc_monto = subtotal * desc_norm
         total = (subtotal - desc_monto) * (1 + impuesto)
         return round(total, 2)
 
@@ -114,18 +133,18 @@ class AlquilerEquipos(Servicio):
             raise ValueError("Los días de alquiler deben ser mayores a 0.")
 
     def calcular_costo(self, impuesto: float = 0.19, descuento: float = 0.0) -> float:
+        desc_norm = self._validar_tasas(impuesto, descuento)
         subtotal = self._costo_base * self._cantidad_equipos * self._dias
-        
+
         # 10% de descuento si alquila 5 días o más
-        desc_aplicado = descuento
-        if self._dias >= 5 and descuento == 0.0:
-            desc_aplicado = 10.0
+        if self._dias >= 5 and desc_norm == 0.0:
+            desc_norm = 0.10
 
         # seguro por equipo
         if self._incluye_seguro:
             subtotal += (15000.0 * self._cantidad_equipos)
 
-        desc_monto = subtotal * (desc_aplicado / 100.0 if desc_aplicado > 1 else desc_aplicado)
+        desc_monto = subtotal * desc_norm
         total = (subtotal - desc_monto) * (1 + impuesto)
         return round(total, 2)
 
@@ -140,7 +159,7 @@ class AsesoriasEspecializadas(Servicio):
 
     def __init__(self, id_servicio: str, nombre: str, costo_base: float, horas: int, nivel_especialista: str = "Senior"):
         self._horas = horas
-        self._nivel_especialista = nivel_especialista.capitalize()
+        self._nivel_especialista = str(nivel_especialista).capitalize() if nivel_especialista else ""
         super().__init__(id_servicio, nombre, costo_base)
 
     @property
@@ -159,10 +178,11 @@ class AsesoriasEspecializadas(Servicio):
             raise ValueError(f"El nivel debe ser uno de los siguientes: {list(self.NIVELES.keys())}")
 
     def calcular_costo(self, impuesto: float = 0.19, descuento: float = 0.0) -> float:
+        desc_norm = self._validar_tasas(impuesto, descuento)
         tarifa = self._costo_base * self.NIVELES[self._nivel_especialista]
         subtotal = tarifa * self._horas
 
-        desc_monto = subtotal * (descuento / 100.0 if descuento > 1 else descuento)
+        desc_monto = subtotal * desc_norm
         total = (subtotal - desc_monto) * (1 + impuesto)
         return round(total, 2)
 
